@@ -12,6 +12,8 @@ for line in lines:
         toPaste += line.replace("&minus","&plus")
     elif "−" in line:
         toPaste += line.replace("−","+")
+    elif "-" in line:
+        toPaste += line.replace("-","+")
     else:
         toPaste += line
 
