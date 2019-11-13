@@ -16,6 +16,7 @@ def findReplaceQuit():
     master.quit()
 
 master = tk.Tk()
+master.title("Find and Replace")
 tk.Label(master, text="Find").grid(row=0)
 tk.Label(master, text="Replace").grid(row=1)
 

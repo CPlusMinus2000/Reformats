@@ -1,7 +1,7 @@
 import pyperclip as pyp
 import re
 
-modes = [0,1,4,5,6]
+modes = [-1,0,1,4,5,6]
 lines = list(pyp.paste().split("\n"))
 ignore = [chr(c) for c in range(ord('A'), ord('z') + 1)]
 ignore += ["xh","kx","kh","ah","&prime;"]
