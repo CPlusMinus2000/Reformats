@@ -31,6 +31,7 @@ tk.Button(master, text='Quit',
                                     column=0, 
                                     sticky=tk.W, 
                                     pady=4)
+                                    
 tk.Button(master, text='Replace', 
             command=findReplace).grid(row=3, 
                                       column=1, 
