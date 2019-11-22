@@ -2,7 +2,7 @@ import pyperclip as pyp
 
 lines = pyp.paste()
 toPaste = ""
-ops = ['+','-','*','/','=','^']
+ops = ['+','-','/','=']
 
 for i in range(len(lines)):
 

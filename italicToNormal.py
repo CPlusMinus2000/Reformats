@@ -4,7 +4,7 @@ modes = [1, 2, 5, 7] # Which modes are active?
 lines = list(pyp.paste().split("\n"))
 ignore = [chr(c) for c in range(ord('A'), ord('z') + 1)]
 ignore += ["xh","kx","kh","ah","&prime;"]
-trig = ["sin","cos","tan","csc","sec","cot","$func","func1","$func2"]
+trig = ["sin","cos","tan","csc","sec","cot","$func","func1","$func2","log","ln"]
 signs = ["$sign","$sign1","$sign2","$sign3","$sign4"]
 
 toPaste = ""
