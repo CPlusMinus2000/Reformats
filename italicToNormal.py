@@ -1,6 +1,6 @@
 import pyperclip as pyp
 
-modes = [1, 2, 5, 7] # Which modes are active?
+modes = [1, 2, 5, 6, 7] # Which modes are active?
 lines = list(pyp.paste().split("\n"))
 ignore = [chr(c) for c in range(ord('A'), ord('z') + 1)]
 ignore += ["xh","kx","kh","ah","&prime;"]
