@@ -6,6 +6,7 @@ ignore = [chr(c) for c in range(ord('A'), ord('z') + 1)]
 ignore += ["xh","kx","kh","ah","&prime;"]
 trig = ["sin","cos","tan","csc","sec","cot","$func","func1","$func2","log","ln"]
 signs = ["$sign","$sign1","$sign2","$sign3","$sign4"]
+spaces = ["<mo>&nbsp;</mo>", "mspace","mtd","mtr"]
 
 toPaste = ""
 for line in lines:
@@ -15,7 +16,7 @@ for line in lines:
         continue
 
     # Getting rid of excess space
-    if 2 in modes and ("<mo>&nbsp;</mo>" in line or "mspace" in line):
+    if 2 in modes and any(space in line for space in spaces):
         continue
 
     # Making italicized words normal (except those in ignore)
