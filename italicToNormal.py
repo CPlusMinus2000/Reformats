@@ -1,12 +1,21 @@
 import pyperclip as pyp
 
-modes = [1, 2, 5, 6, 7] # Which modes are active?
+modes = [1, 2, 5, 6, 7, 8] # Which modes are active?
 lines = list(pyp.paste().split("\n"))
 ignore = [chr(c) for c in range(ord('A'), ord('z') + 1)]
 ignore += ["xh","kx","kh","ah","&prime;"]
 trig = ["sin","cos","tan","csc","sec","cot","$func","func1","$func2","log","ln"]
 signs = ["$sign","$sign1","$sign2","$sign3","$sign4"]
 spaces = ["<mo>&nbsp;</mo>", "mspace","mtd","mtr"]
+elements = ['H',"He","Li","Be",'B','C','N','O','F',"Ne","Na","Mg","Al","Se",
+            'P','S',"Cl","Ar",'K',"Ca","Sc","Ti",'V',"Cr","Mn","Fe","Cd","Ni",
+            "Cu","Zn","Ga","Ge","As","Se","Br","Kr","Rb","Sr",'Y',"Zr","Nb",
+            "Mo","Tc","Ru","Rh","Pd","Ag","Cd","In","Sn","Sb","Te",'I',"Xe",
+            "Cs","Ba","La","Ce","Pr","Nd","Pm","Sm","Eu","Gd","Tb","Dy","Ho",
+            "Er","Tm","Yb","Lu","Hf","Ta",'W',"Re","Os","Ir","Pt","Au","Hg",
+            "Tl","Pb","Bi","Po","At","Rn","Fr","Ra","Ac","Th","Pa",'U',"Np",
+            "Pu","Am","Cm","Bk","Cf","Es","Fm","Md","No","Lr","Rf","Db","Sg",
+            "Bh","Hs","Mt","Ds","Rg","Cn","Nh","Fl","Mc","Lv","Ts","Og"]
 
 toPaste = ""
 for line in lines:
@@ -54,6 +63,15 @@ for line in lines:
         if any(['>' + op + '<' in line for op in signs]) and "mn>" in line:
             toPaste += line.replace("mn>","mo>")
             continue
+    
+    # Mode 3 (normalization of text) for specifically elements (Chemistry)
+    if 8 in modes:
+        if '"italic">' in line:
+            start = line.find('"italic">') + len('"italic>"')
+            end = line.find('</mi>')
+            if line[start:end] in elements:
+                toPaste += line.replace("italic", "normal")
+                continue
 
     toPaste += line
             
