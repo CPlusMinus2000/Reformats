@@ -54,7 +54,7 @@ for line in lines:
     
     # Changing commas to be numbers rather than operators (for thousands)
     if 6 in modes:
-        if "<mo>&comma;</mo>" in line:
+        if "<mo>&comma;</mo>" in line or '<mo>,</mo>' in line:
             toPaste += line.replace("mo","mn")
             continue
     
