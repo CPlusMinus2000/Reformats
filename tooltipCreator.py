@@ -7,6 +7,16 @@ formatted += '<span class="OpenStaxChem-t">TERM</span>DEFINITION</span></span>'
 source = "../../OpenStax Backups/Chemistry/manifest.xml"
 mathify = ["&#960;", "&#963;"]
 
+def findAll(superstring: str, substring: str):
+    ret = []
+    index = superstring.find(substring)
+    
+    while (index != -1): # -1 means that the substring is not present
+        ret.append(index)
+        index = superstring.find(substring, index + 1)
+    
+    return ret
+
 def mathMLulate(text: str, mType: str="let") -> str:
     sTags = {
         "let": '<mi mathvariant="italic">',
@@ -25,14 +35,23 @@ def mathMLulate(text: str, mType: str="let") -> str:
 
     return start + text + end
 
-def main(text: str) -> str:
+def makeTooltip(text: str) -> str:
     filled = formatted.replace("TERM", text, 1).replace("TERM", text.lower())
     definition = ""
 
     with open(source, 'r', encoding="utf-8") as manifest:
         data = manifest.read()
         toFind = "<dt>" + text.lower() + "</dt>"
-        defIndex = data.find(toFind) + len(toFind) + 2
+        defIndex = data.find(toFind)
+
+        if defIndex == -1:
+            toFind = "<dt>" + text[:-1].lower() + "</dt>"
+            defIndex = data.find(toFind)
+        
+        if defIndex == -1:
+            return filled.replace("DEFINITION", "DEFINITION NOT FOUND")
+        
+        defIndex += len(toFind) + 2
         definition = data[data.find('>', defIndex) + 1:data.find('<', defIndex)]
 
         for repl in mathify:
@@ -45,8 +64,20 @@ def main(text: str) -> str:
         
     return filled.replace("DEFINITION", definition)
 
-if __name__ == "__main__":
+def main() -> None:
     txt = pyp.paste()
-    inner = txt[(txt.find('>') + 1):txt.rfind('<')]
-    outer = txt[txt.find('<'):(txt.rfind('>') + 1)]
-    pyp.copy(txt.replace(outer, main(inner)))
+
+    outSIndices = findAll(txt, '<span data-type="term">')
+    inEIndices = [txt.find('</span>', s) for s in outSIndices]
+    inSIndices = [i + len('<span data-type="term">') for i in outSIndices]
+    outEIndices = [i + len('</span>') for i in inEIndices]
+    
+    for i in reversed(range(len(inEIndices))):
+        inner = txt[inSIndices[i]:inEIndices[i]]
+        outer = txt[outSIndices[i]:outEIndices[i]]
+        txt = txt.replace(outer, makeTooltip(inner), 1)
+    
+    pyp.copy(txt)
+
+if __name__ == "__main__":
+    main()
