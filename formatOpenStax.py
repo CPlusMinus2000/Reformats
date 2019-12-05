@@ -108,7 +108,9 @@ def addTooltips() -> None:
     for i in reversed(range(len(inEIndices))):
         inner = txt[inSIndices[i]:inEIndices[i]]
         outer = txt[outSIndices[i]:outEIndices[i]]
-        txt = txt.replace(outer, makeTooltip(inner), 1)
+        start = txt[:outSIndices[i]]
+        end = txt[outSIndices[i]:]
+        txt = start + end.replace(outer, makeTooltip(inner), 1)
     
     # Copy the formatted text.
     pyp.copy(txt)
@@ -150,11 +152,13 @@ def addFigures() -> None:
     #  sure to move backwards so as not to mess up other indices.
     for i in reversed(range(len(sIndices))):
         oldFigure = txt[sIndices[i]:eIndices[i]]
-        txt = txt.replace(oldFigure, makeFigure(oldFigure), 1)
+        start = txt[:sIndices[i]]
+        end = txt[sIndices[i]:]
+        txt = start + end.replace(oldFigure, makeFigure(oldFigure), 1)
     
     # Copy the formatted text.
     pyp.copy(txt)
 
 if __name__ == "__main__":
     addTooltips()
-    addTooltips()
+    addFigures()
