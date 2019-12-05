@@ -49,7 +49,7 @@ def mathMLulate(text: str, mType: str="let") -> str:
 # Given a keyword, this function finds the corresponding definition and formats
 #  it into a tooltip, returning said tooltip as a string.
 def makeTooltip(text: str) -> str:
-    filled = formatted.replace("TERM", text, 1).replace("TERM", text.lower())
+    filled = formatted.replace("TERM", text, 1)
     definition = "DEFINITION NOT FOUND" # The default value
 
     with open(source, 'r', encoding="utf-8") as manifest:
@@ -57,19 +57,26 @@ def makeTooltip(text: str) -> str:
         toFind = "<dt>" + text.lower() + "</dt>"
         defIndex = data.find(toFind)
 
+        if defIndex != -1: # Actually found it, so replace out the term
+            filled = filled.replace("TERM", text.lower())
+
         if defIndex == -1: # Maybe it contains a proper name? No lowercasing.
             toFind = "<dt>" + text + "</dt>"
             defIndex = data.find(toFind)
+            filled = filled.replace("TERM", text)
 
         if defIndex == -1: # Maybe it's a plural? Try removing the s and check.
             toFind = "<dt>" + text[:-1].lower() + "</dt>"
             defIndex = data.find(toFind)
+            filled = filled.replace("TERM", text[:-1].lower())
         
         if defIndex == -1: # Maybe it's a plural with a proper name?
             toFind = "<dt>" + text[:-1] + "</dt>"
             defIndex = data.find(toFind)
+            filled = filled.replace("TERM", text[:-1])
         
         if defIndex == -1: # Still can't find it? Report it.
+            filled = filled.replace("TERM", text.lower())
             return filled.replace("DEFINITION", definition)
         
         defIndex += len(toFind) + 2 # Add a bit of extra length
