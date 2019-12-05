@@ -190,13 +190,13 @@ def replaceItalics() -> None:
     for i in reversed(range(len(sIndices))):
         oldItalics = txt[sIndices[i]:eIndices[i]]
         lStart = oldItalics.find('>') + len('>')
-        lEnd = oldItalics.find('<', start)
+        lEnd = oldItalics.find('<', lStart)
         letter = oldItalics[lStart:lEnd]
 
         if letter in letters:
             start = txt[:sIndices[i]]
             end = txt[sIndices[i]:]
-            txt = start + end.replace(oldItalics, mathMLulate(letter, "let"))
+            txt = start + end.replace(oldItalics, mathMLulate(letter), 1)
         
     pyp.copy(txt)
 
