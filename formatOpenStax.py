@@ -164,7 +164,7 @@ def replaceLinks() -> None:
     txt = pyp.paste()
     label = '<span class="OpenStaxChem-label">Figure NUMBER</span>'
 
-    sIndices = findAll(txt, '<a>')
+    sIndices = findAll(txt, '<a')
     eIndices = [txt.find('</a>', i) + len('</a>') for i in sIndices]
 
     # Replace all of the links that actually contain "[link]".
@@ -175,6 +175,8 @@ def replaceLinks() -> None:
             start = txt[:sIndices[i]]
             end = txt[sIndices[i]:]
             txt = start + end.replace(oldLink, label, 1)
+    
+    pyp.copy(txt)
 
 if __name__ == "__main__":
     addTooltips()
