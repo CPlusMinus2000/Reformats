@@ -159,6 +159,24 @@ def addFigures() -> None:
     # Copy the formatted text.
     pyp.copy(txt)
 
+# Removes all of those annoying link things.
+def replaceLinks() -> None:
+    txt = pyp.paste()
+    label = '<span class="OpenStaxChem-label">Figure NUMBER</span>'
+
+    sIndices = findAll(txt, '<a>')
+    eIndices = [txt.find('</a>', i) + len('</a>') for i in sIndices]
+
+    # Replace all of the links that actually contain "[link]".
+    for i in reversed(range(len(sIndices))):
+        oldLink = txt[sIndices[i]:eIndices[i]]
+
+        if "[link]" in oldLink:
+            start = txt[:sIndices[i]]
+            end = txt[sIndices[i]:]
+            txt = start + end.replace(oldLink, label, 1)
+
 if __name__ == "__main__":
     addTooltips()
     addFigures()
+    replaceLinks()
