@@ -1,6 +1,6 @@
 import pyperclip as pyp
 
-modes = [1, 2, 5, 6, 7, 8] # Which modes are active?
+modes = [1, 2, 3, 5, 6, 7, 8] # Which modes are active?
 lines = list(pyp.paste().split("\n"))
 ignore = [chr(c) for c in range(ord('A'), ord('z') + 1)]
 ignore += ["xh","kx","kh","ah","&prime;"]
@@ -33,7 +33,7 @@ for line in lines:
         if '"italic">' in line:
             start = line.find('"italic">') + len('"italic>"')
             end = line.find('</mi>')
-            if line[start:end] not in ignore:
+            if line[start:end] not in ignore or line[start:end] in elements:
                 toPaste += line.replace("italic", "normal")
                 continue
     
@@ -69,7 +69,8 @@ for line in lines:
         if '"italic">' in line:
             start = line.find('"italic">') + len('"italic>"')
             end = line.find('</mi>')
-            if line[start:end] in elements:
+            if (line[start:end] in elements or 
+                all(i in elements for i in line[start:end])):
                 toPaste += line.replace("italic", "normal")
                 continue
 
