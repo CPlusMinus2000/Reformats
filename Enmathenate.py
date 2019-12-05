@@ -95,8 +95,10 @@ def wordByWord() -> None:
     toPaste = ""
 
     for word in pyp.paste().split(' '):
-        if word in words or word in elements:
+        if word in words:
             toPaste += mStart + "<mi>" + word + "</mi>" + mEnd + ' '
+        elif word in elements:
+            toPaste += mStart + norm.replace("NORMAL", word) + mEnd + ' '
         else:
             toPaste += word + ' '
     
