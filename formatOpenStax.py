@@ -14,6 +14,7 @@ template = ('<figure>'
 # Path of manifest and any pieces of text that should go into MathML
 source = "../../OpenStax Backups/Chemistry/manifest.xml"
 mathify = ["&#960;", "&#963;"]
+letters = ['p', 's']
 
 # Find all substrings, which is useful for pinpointing the locations of all
 #  of the terms which need definitions.
@@ -178,7 +179,29 @@ def replaceLinks() -> None:
     
     pyp.copy(txt)
 
+# Replaces certain italicized pieces of text with their MathML variants.
+def replaceItalics() -> None:
+    txt = pyp.paste()
+    
+    sIndices = findAll(txt, '<em data-effect="italics">')
+    eIndices = [txt.find('</em>', i) + len('</em>') for i in sIndices]
+
+    # Replace all of the italicized "words" with the right text contents.
+    for i in reversed(range(len(sIndices))):
+        oldItalics = txt[sIndices[i]:eIndices[i]]
+        lStart = oldItalics.find('>') + len('>')
+        lEnd = oldItalics.find('<', start)
+        letter = oldItalics[lStart:lEnd]
+
+        if letter in letters:
+            start = txt[:sIndices[i]]
+            end = txt[sIndices[i]:]
+            txt = start + end.replace(oldItalics, mathMLulate(letter, "let"))
+        
+    pyp.copy(txt)
+
 if __name__ == "__main__":
     addTooltips()
     addFigures()
     replaceLinks()
+    replaceItalics()
