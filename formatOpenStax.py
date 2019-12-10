@@ -13,7 +13,7 @@ template = ('<figure>'
             'Figure NUMBER</span>CAPTION</figcaption></figure>')
 
 # Path of manifest and any pieces of text that should go into MathML
-source = "../../OpenStax Backups/Chemistry/manifest.xml"
+source = "../../OpenStax Backups/Chemistry/manifest_old.xml"
 mathify = ["&#960;", "&#963;"]
 letters = ['p', 's', 'd']
 
@@ -50,9 +50,12 @@ def mathMLulate(text: str, mType: str="let") -> str:
 
 # Given a keyword, this function finds the corresponding definition and formats
 #  it into a tooltip, returning said tooltip as a string.
-def makeTooltip(text: str) -> str:
+def makeTooltip(text: str, top: bool=False) -> str:
     filled = formatted.replace("TERM", text, 1)
     definition = "DEFINITION NOT FOUND" # The default value
+
+    if top: # Slightly different definition style for items higher in the text
+        filled = filled.replace("definition", "definitionTOP")
 
     with open(source, 'r', encoding="utf-8") as manifest:
         data = manifest.read() # Get the manifest data as a string.
@@ -112,7 +115,8 @@ def addTooltips() -> None:
         outer = txt[outSIndices[i]:outEIndices[i]]
         start = txt[:outSIndices[i]]
         end = txt[outSIndices[i]:]
-        txt = start + end.replace(outer, makeTooltip(inner), 1)
+        top = outSIndices[i] < 600
+        txt = start + end.replace(outer, makeTooltip(inner, top), 1)
     
     # Copy the formatted text.
     pyp.copy(txt)
