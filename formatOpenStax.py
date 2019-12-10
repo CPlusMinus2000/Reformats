@@ -8,7 +8,8 @@ formatted += '<span class="OpenStaxChem-t">TERM</span>DEFINITION</span></span>'
 
 template = ('<figure>'
             '<img alt="ALTTEXT" class="center" data-media-type="image/jpg"'
-            ' src="LINK" /><figcaption><span class="OpenStaxChem-fig-label">'
+            ' src="LINK" id="ID"/><figcaption>'
+            '<span class="OpenStaxChem-fig-label">'
             'Figure NUMBER</span>CAPTION</figcaption></figure>')
 
 # Path of manifest and any pieces of text that should go into MathML
@@ -135,9 +136,15 @@ def makeFigure(text: str) -> str:
     linkEnd = text.find("/>", linkLoc) - 2
     link = text[linkLoc:linkEnd]
 
+    # Get the image id
+    IDLoc = text.find("id=") + len("id=") + 1
+    IDEnd = text.find('"', IDLoc + 2)
+    imageID = text[IDLoc:IDEnd]
+
     # Construct the new figure and return
     figure = template.replace("ALTTEXT", altText)
     figure = figure.replace("LINK", link)
+    figure = figure.replace("ID", imageID)
     return figure.replace("CAPTION", caption)
 
 # Parses the clipboard text for all old figures, and passes them incrementally
