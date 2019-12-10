@@ -1,6 +1,6 @@
 import pyperclip as pyp
 
-modes = [1, 2, 3, 5, 6, 7, 8] # Which modes are active?
+modes = [1, 2, 3, 5, 6, 7, 8, 9] # Which modes are active?
 lines = list(pyp.paste().split("\n"))
 ignore = [chr(c) for c in range(ord('A'), ord('z') + 1)]
 ignore += ["xh","kx","kh","ah","&prime;"]
@@ -31,7 +31,7 @@ for line in lines:
     # Making italicized words normal (except those in ignore)
     if 3 in modes:
         if '"italic">' in line:
-            start = line.find('"italic">') + len('"italic>"')
+            start = line.find('"italic">') + len('"italic">')
             end = line.find('</mi>')
             if line[start:end] not in ignore or line[start:end] in elements:
                 toPaste += line.replace("italic", "normal")
@@ -67,12 +67,18 @@ for line in lines:
     # Mode 3 (normalization of text) for specifically elements (Chemistry)
     if 8 in modes:
         if '"italic">' in line:
-            start = line.find('"italic">') + len('"italic>"')
+            start = line.find('"italic">') + len('"italic">')
             end = line.find('</mi>')
             if (line[start:end] in elements or 
                 all(i in elements for i in line[start:end])):
                 toPaste += line.replace("italic", "normal")
                 continue
+    
+    # A mode made specially for oxygen in Chemistry, since O's are weird
+    if 9 in modes:
+        if '<mi>O</mi>' in line:
+            toPaste += line.replace('<mi>', '<mi mathvariant="normal">')
+            continue
 
     toPaste += line
             
