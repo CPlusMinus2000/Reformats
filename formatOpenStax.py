@@ -170,7 +170,8 @@ def addFigures() -> None:
 # Removes all of those annoying link things.
 def replaceLinks() -> None:
     txt = pyp.paste()
-    label = '<span class="OpenStaxChem-label">Figure NUMBER</span>'
+    lS = '<span class="OpenStaxChem-label">'
+    lE = '</span>'
 
     sIndices = findAll(txt, '<a')
     eIndices = [txt.find('</a>', i) + len('</a>') for i in sIndices]
@@ -182,7 +183,8 @@ def replaceLinks() -> None:
         if "[link]" in oldLink:
             start = txt[:sIndices[i]]
             end = txt[sIndices[i]:]
-            txt = start + end.replace(oldLink, label, 1)
+            newLink = lS + oldLink.replace("[link]", "Figure NUMBER") + lE
+            txt = start + end.replace(oldLink, newLink, 1)
     
     pyp.copy(txt)
 
