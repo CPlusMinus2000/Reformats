@@ -21,6 +21,10 @@ elements = ['H',"He","Li","Be",'B','C','N','O','F',"Ne","Na","Mg","Al","Se",
 # Combs through the text in the clipboard character by character, looking
 #  for text that needs to be replaced.
 def charByChar() -> None:
+    def isDecimal(iterable) -> bool:
+        chars = [str(n) for n in range(10)] + ['.']
+        return all(c in chars for c in iterable)
+    
     text = pyp.paste()
     toPaste = ""
     i = 0
@@ -28,13 +32,17 @@ def charByChar() -> None:
     while i < len(text):
         if text[i].isdigit():
             j = i + 1
-            while text[i:j].isdigit():
+            while isDecimal(text[i:j]):
                 j += 1
             
             j -= 1
 
             if text[i:j] in ignore or text[i-1] == text[j] == '"':
                 toPaste += text[i:j]
+            elif text[j:j+6] == "&deg;":
+                toPaste += mStart + "<mn>" + text[i:j] + "</mn>"
+                toPaste += "<mi>&deg;</mi>" + mEnd
+                j += 6
             else:
                 toPaste += mStart + "<mn>" + text[i:j] + "</mn>" + mEnd
             
