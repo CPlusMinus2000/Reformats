@@ -39,10 +39,10 @@ def charByChar() -> None:
 
             if text[i:j] in ignore or text[i-1] == text[j] == '"':
                 toPaste += text[i:j]
-            elif text[j:j+6] == "&deg;":
+            elif text[j:j+5] == "&deg;":
                 toPaste += mStart + "<mn>" + text[i:j] + "</mn>"
                 toPaste += "<mi>&deg;</mi>" + mEnd
-                j += 6
+                j += 5
             else:
                 toPaste += mStart + "<mn>" + text[i:j] + "</mn>" + mEnd
             
