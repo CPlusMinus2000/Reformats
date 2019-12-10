@@ -15,7 +15,7 @@ template = ('<figure>'
 # Path of manifest and any pieces of text that should go into MathML
 source = "../../OpenStax Backups/Chemistry/manifest.xml"
 mathify = ["&#960;", "&#963;"]
-letters = ['p', 's']
+letters = ['p', 's', 'd']
 
 # Find all substrings, which is useful for pinpointing the locations of all
 #  of the terms which need definitions.

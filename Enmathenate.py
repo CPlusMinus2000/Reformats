@@ -7,7 +7,7 @@ norm = '<mi mathvariant="normal">NORMAL</mi>'
 ital = '<mi mathvariant="italic">ITALIC</mi>'
 oper = '<mo>OPERATOR</mo>'
 ignore = []
-words = ["&sigma;", "&pi;", "&psi;", 's', 'p']
+words = ["&sigma;", "&pi;", "&psi;", 's', 'p', 'd']
 elements = ['H',"He","Li","Be",'B','C','N','O','F',"Ne","Na","Mg","Al","Se",
             'P','S',"Cl","Ar",'K',"Ca","Sc","Ti",'V',"Cr","Mn","Fe","Cd","Ni",
             "Cu","Zn","Ga","Ge","As","Se","Br","Kr","Rb","Sr",'Y',"Zr","Nb",
