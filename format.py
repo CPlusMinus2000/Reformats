@@ -7,6 +7,7 @@ ignore += ["xh","kx","kh","ah","&prime;"]
 trig = ["sin","cos","tan","csc","sec","cot","$func","func1","$func2","log","ln"]
 signs = ["$sign","$sign1","$sign2","$sign3","$sign4"]
 spaces = ["<mo>&nbsp;</mo>", "mspace","mtd","mtr"]
+plain = ['O', 'Li']
 elements = ['H',"He","Li","Be",'B','C','N','O','F',"Ne","Na","Mg","Al","Se",
             'P','S',"Cl","Ar",'K',"Ca","Sc","Ti",'V',"Cr","Mn","Fe","Cd","Ni",
             "Cu","Zn","Ga","Ge","As","Se","Br","Kr","Rb","Sr",'Y',"Zr","Nb",
@@ -76,7 +77,7 @@ for line in lines:
     
     # A mode made specially for oxygen in Chemistry, since O's are weird
     if 9 in modes:
-        if '<mi>O</mi>' in line:
+        if any(('<mi>' + w + '</mi>' in line for w in plain)):
             toPaste += line.replace('<mi>', '<mi mathvariant="normal">')
             continue
 
