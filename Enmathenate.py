@@ -26,18 +26,21 @@ def charByChar() -> None:
         return all(c in chars for c in iterable)
     
     text = pyp.paste()
+    length = len(text)
     toPaste = ""
     i = 0
 
-    while i < len(text):
+    while i < length:
         if text[i].isdigit():
             j = i + 1
-            while isDecimal(text[i:j]):
+            while isDecimal(text[i:j]) and j <= length + 1:
                 j += 1
+                print(text[i:j])
             
             j -= 1
 
-            if text[i:j] in ignore or text[i-1] == text[j] == '"':
+            if (0 < i and j < length and 
+                (text[i:j] in ignore or text[i-1] == text[j] == '"')):
                 toPaste += text[i:j]
             elif text[j:j+5] == "&deg;":
                 toPaste += mStart + "<mn>" + text[i:j] + "</mn>"
@@ -102,12 +105,12 @@ def charByChar() -> None:
 def wordByWord() -> None:
     toPaste = ""
 
-    for word in pyp.paste().split(' '):
-        if word in words:
+    for word in pyp.paste().split(' '): # Split by 'word', so spaces
+        if word in words: # I'm calling them 'words', but some are just letters
             toPaste += mStart + "<mi>" + word + "</mi>" + mEnd + ' '
-        elif word in elements:
+        elif word in elements: # Elements have to be normalized
             toPaste += mStart + norm.replace("NORMAL", word) + mEnd + ' '
-        else:
+        else: # Add the word back, or it'll be missing when pasting
             toPaste += word + ' '
     
     pyp.copy(toPaste[:-1]) # The very last character is an extra space.
