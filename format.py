@@ -1,12 +1,12 @@
 import pyperclip as pyp
 
-modes = [1, 2, 3, 5, 6, 7, 8, 9] # Which modes are active?
+modes = [1, 2, 3, 5, 7, 8, 9] # Which modes are active?
 lines = list(pyp.paste().split("\n"))
 ignore = [chr(c) for c in range(ord('A'), ord('z') + 1)]
 ignore += ["xh","kx","kh","ah","&prime;"]
 trig = ["sin","cos","tan","csc","sec","cot","$func","func1","$func2","log","ln"]
 signs = ["$sign","$sign1","$sign2","$sign3","$sign4"]
-spaces = ["<mo>&nbsp;</mo>", "mspace","mtd","mtr"]
+spaces = ["<mo>&nbsp;</mo>","mspace","mtd","mtr"]
 plain = ['O', 'Li']
 elements = ['H',"He","Li","Be",'B','C','N','O','F',"Ne","Na","Mg","Al","Se",
             'P','S',"Cl","Ar",'K',"Ca","Sc","Ti",'V',"Cr","Mn","Fe","Cd","Ni",
@@ -77,7 +77,7 @@ for line in lines:
     
     # A mode made specially for oxygen in Chemistry, since O's are weird
     if 9 in modes:
-        if any(('<mi>' + w + '</mi>' in line for w in plain)):
+        if any('<mi>' + w + '</mi>' in line for w in plain):
             toPaste += line.replace('<mi>', '<mi mathvariant="normal">')
             continue
 
