@@ -25,7 +25,7 @@ tD2 = {
     2: '\n</menclose>',
     3: '\n</mstyle>',
     4: '\n</mn>\n</mrow>\n</math>',
-    5: '</span>'
+    5: '</span>',
     6: '</span>'
 }
 
