@@ -2,9 +2,9 @@
 import pyperclip as pyp
 
 # Make a big long string that contains the format of tooltips.
-formatted = '<span class="OpenStaxChem-term">TERM'
-formatted += '<span class="OpenStaxChem-definition">'
-formatted += '<span class="OpenStaxChem-t">TERM</span>DEFINITION</span></span>'
+formatted = ('<span class="OpenStaxChem-term">TERM'
+             '<span class="OpenStaxChem-definition">'
+             '<span class="OpenStaxChem-t">TERM</span>DEFINITION</span></span>')
 
 template = ('<figure>'
             '<img alt="ALTTEXT" class="center" data-media-type="image/jpg"'
